@@ -1,0 +1,359 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg-canvas: #fafafa;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f4f4f5;
+  --bg-hover: #f4f4f5;
+  --border-hairline: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --text-primary: #09090b;
+  --text-secondary: #3f3f46;
+  --text-muted: #71717a;
+  --accent-primary: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #eef2ff;
+  --status-ok: #059669;
+  --status-warn: #d97706;
+  --status-danger: #e11d48;
+  --glass-bg: rgba(250, 250, 250, 0.82);
+  --drawer-bg: rgba(255, 255, 255, 0.96);
+}
+
+.dark {
+  --bg-canvas: #09090b;
+  --bg-surface: #111113;
+  --bg-subtle: #18181b;
+  --bg-hover: #1f1f23;
+  --border-hairline: #27272a;
+  --border-strong: #3f3f46;
+  --text-primary: #fafafa;
+  --text-secondary: #d4d4d8;
+  --text-muted: #a1a1aa;
+  --accent-primary: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-soft: rgba(99, 102, 241, 0.14);
+  --status-ok: #10b981;
+  --status-warn: #f59e0b;
+  --status-danger: #f43f5e;
+  --glass-bg: rgba(9, 9, 11, 0.82);
+  --drawer-bg: rgba(17, 17, 19, 0.97);
+}
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .font-mono,
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Crisp custom scrollbars for high-density tables & drawers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 9999px;
+}
+
+/* Subtle radial atmosphere at top of workspace */
+.workspace-atmosphere {
+  background-image: radial-gradient(
+    ellipse 65% 32% at 50% -8%,
+    rgba(79, 70, 229, 0.055),
+    transparent 70%
+  );
+}
+
+.dark .workspace-atmosphere {
+  background-image: radial-gradient(
+    ellipse 65% 32% at 50% -8%,
+    rgba(99, 102, 241, 0.1),
+    transparent 70%
+  );
+}
+
+/* Reduced motion compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Professional Print / Save PDF stylesheet for Reports */
+@page {
+  size: A4 portrait;
+  margin: 14mm 12mm 16mm 12mm;
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  /* Force crisp light-paper palette even when user exports from Dark mode */
+  :root,
+  html,
+  html.dark,
+  .dark {
+    color-scheme: light !important;
+    --bg-canvas: #ffffff !important;
+    --bg-surface: #ffffff !important;
+    --bg-subtle: #f4f4f5 !important;
+    --bg-hover: #f4f4f5 !important;
+    --border-hairline: #d4d4d8 !important;
+    --border-strong: #a1a1aa !important;
+    --text-primary: #09090b !important;
+    --text-secondary: #27272a !important;
+    --text-muted: #52525b !important;
+    --accent-primary: #3730a3 !important;
+    --accent-soft: #eef2ff !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  aside,
+  header,
+  nav,
+  .no-print,
+  [data-sonner-toaster],
+  [role="status"] {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  html,
+  body {
+    width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
+    color: #09090b !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+  }
+
+  .workspace-atmosphere,
+  main {
+    background: #ffffff !important;
+    background-image: none !important;
+    max-width: none !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Executive report masthead */
+  .print-report-header {
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 14px !important;
+    border-bottom: 1.5px solid #18181b !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Keep the 4 executive KPI summary boxes in a crisp 4-column row on A4 */
+  .print-summary-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-card {
+    background: #ffffff !important;
+    border: 1px solid #d4d4d8 !important;
+    border-radius: 6px !important;
+    padding: 10px 12px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-summary-grid .print-card .font-mono {
+    font-size: 13pt !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Chart formatting: keep intact on one page, scale vector SVG cleanly to A4 width */
+  .print-chart-card {
+    background: #ffffff !important;
+    border: 1px solid #d4d4d8 !important;
+    border-radius: 6px !important;
+    padding: 12px 14px !important;
+    margin-bottom: 14px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    overflow: visible !important;
+  }
+
+  .print-chart-svg {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .print-chart-svg .recharts-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .print-chart-svg svg.recharts-surface {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .print-chart-svg .recharts-cartesian-axis-tick-value,
+  .print-chart-svg text {
+    fill: #3f3f46 !important;
+    font-size: 10px !important;
+  }
+
+  .print-chart-svg .recharts-cartesian-grid line {
+    stroke: #e4e4e7 !important;
+  }
+
+  /* Multi-page report tables: allow breaking across pages with repeating headers & intact rows */
+  .print-table-wrapper {
+    background: #ffffff !important;
+    border: 1px solid #d4d4d8 !important;
+    border-radius: 6px !important;
+    overflow: visible !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  .print-table-scroll {
+    overflow: visible !important;
+  }
+
+  .print-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: auto !important;
+    font-size: 8.5pt !important;
+    line-height: 1.35 !important;
+  }
+
+  .print-table thead {
+    display: table-header-group !important;
+  }
+
+  .print-table tfoot {
+    display: table-footer-group !important;
+  }
+
+  .print-table tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-table thead th {
+    background: #f4f4f5 !important;
+    color: #27272a !important;
+    font-weight: 600 !important;
+    padding: 6px 8px !important;
+    border-bottom: 1.25px solid #a1a1aa !important;
+    white-space: nowrap !important;
+  }
+
+  .print-table tbody td {
+    padding: 5.5px 8px !important;
+    border-bottom: 0.75px solid #e4e4e7 !important;
+    color: #09090b !important;
+    vertical-align: middle !important;
+  }
+
+  .print-table tbody td.font-mono {
+    white-space: nowrap !important;
+  }
+
+  .print-table tbody tr:nth-child(even) td {
+    background: #fafafa !important;
+  }
+
+  .print-table tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  /* Compact, legible status badges on white paper without distorting indicator dots */
+  .print-table td > span {
+    padding: 1px 6px !important;
+    font-size: 7.5pt !important;
+    white-space: nowrap !important;
+  }
+
+  .print-report-footer {
+    margin-top: 14px !important;
+    padding-top: 8px !important;
+    border-top: 1px solid #d4d4d8 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    font-size: 8pt !important;
+    color: #52525b !important;
+    break-inside: avoid !important;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+}

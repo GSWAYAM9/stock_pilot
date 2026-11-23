@@ -1,0 +1,6 @@
+{
+  "name": "StockPilot — Inventory Management",
+  "description": "Enterprise-grade Indian electrical & industrial supplies inventory platform with multi-godown tracking, GST invoicing, purchase receiving, append-only stock ledger, and reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
